@@ -40,7 +40,9 @@ app.post('/repos/import', function (req, res) {
     // read from database
     // filter results
     // pass back to client
-    
+    Repo.find((err, repositories) => {
+      // do magic here
+    });
   })
   .catch((err) => {
     console.log('error from github: ',err);
