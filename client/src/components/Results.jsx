@@ -3,14 +3,14 @@ import React from 'react';
 const Results = (props) => (
   <div>
   <br/>
-    <p><a href="#">GitHub Fetcher</a></p>
-    <p>mikedoyle007</p>
+    <p>repo: <a href="#">GitHub Fetcher</a></p>
+    <p>by: mikedoyle007</p>
     <p>description</p>
   
     <br/>
-    <p><a href="#">GitHub Fetcher</a></p>
-    <p>mikedoyle007</p>
-    <p>description</p>
+    <p>repo: <a href="#">{props.repos[0].name}</a></p>
+    <p>by: {props.repos[0].owner.login}</p>
+    <p>{props.repos[0].description}</p>
   </div>
   
 )
