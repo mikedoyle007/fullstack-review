@@ -12,10 +12,6 @@ app.use(bodyParser.json());
 
 app.post('/repos/import', function (req, res) {
   console.log('post request received by server');
-  // filter response to fit into db
-  // check if in database
-  // if in database update db
-  // if not, then store in db
   let username = req.body.username;
   
   axios.get(`https://api.github.com/users/${username}/repos`)
@@ -23,7 +19,7 @@ app.post('/repos/import', function (req, res) {
     for (var i = 0; i < response.data.length; i++) {
       let repo = new Repo({
         username: username,
-        repoName: response.data[i].name,
+        name: response.data[i].name,
         url: response.data[i].html_url,
         description: response.data[i].description,
         forks: response.data[i].forks
@@ -42,11 +38,9 @@ app.post('/repos/import', function (req, res) {
   .then((response1) => {
     console.log('right before the repo.find');
     console.log('response1 = ', response1);
-    // read from database
-    // filter results
-    // pass back to client
     Repo.find((err, repositories) => {
       // do magic here
+      console.log('repositories after find() = ', repositories);
     });
   })
   .catch((err) => {
@@ -55,19 +49,11 @@ app.post('/repos/import', function (req, res) {
   });
 });
 
-// app.post('/', (req, res) => {
-//   console.log('request is: ', req);
-//   res.send('success');
-// });
 
 
 app.get('/repos', function (req, res) {
 
   console.log('response from app.get on the server side', res);
-  // TODO
-  // upon app startup
-  // read from db (top 25 repos)
-  // POST response (top 25 repos) to client
   Repo.find((err, repo) => {
     if (err) {
       return console.log('error', err);
