@@ -18,7 +18,7 @@ app.post('/repos/import', function (req, res) {
   // if not, then store in db
   let username = req.body.username;
   
-  axios.get(`https://api.github.com/users/mikedoyle007/repos`)
+  axios.get(`https://api.github.com/users/${username}/repos`)
   .then((response) => {
     for (var i = 0; i < response.data.length; i++) {
       let repo = new Repo({
@@ -33,10 +33,15 @@ app.post('/repos/import', function (req, res) {
           console.log('ME: error storing in server');
         }
         console.log('ME: success saving to database!!!');
+        // TODO: start here
+
       });
+      console.log('repo = :', repo);
     }
   })
   .then((response1) => {
+    console.log('right before the repo.find');
+    console.log('response1 = ', response1);
     // read from database
     // filter results
     // pass back to client
