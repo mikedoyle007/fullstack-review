@@ -1,6 +1,7 @@
 var express = require('express');
 let bodyParser = require('body-parser');
 let axios = require('axios');
+let Repo = require('../database/index');
 
 var app = express();
 
@@ -10,31 +11,36 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.post('/repos/import', function (req, res) {
-  // TODO
   console.log('post request received by server');
-  // console.log('request is:', req.body);
-  // GET request to github api
   // filter response to fit into db
   // check if in database
   // if in database update db
   // if not, then store in db
   let username = req.body.username;
-  console.log('username = ', username);
   
   axios.get(`https://api.github.com/users/mikedoyle007/repos`)
   .then((response) => {
-    // console.log('username is: ', username);
-    // console.log('success!!!');
-    console.log(response.data[0].name);
-
-    // define vars for db
-    // let username;
-    // let repoName;
-    // let url;
-    // let description;
-    // let forks;
-
-
+    for (var i = 0; i < response.data.length; i++) {
+      let repo = new Repo({
+        username: username,
+        repoName: response.data[i].name,
+        url: response.data[i].html_url,
+        description: response.data[i].description,
+        forks: response.data[i].forks
+      })
+      .save((err, repo) => {
+        if (err) {
+          console.log('ME: error storing in server');
+        }
+        console.log('ME: success saving to database!!!');
+      });
+    }
+  })
+  .then((response1) => {
+    // read from database
+    // filter results
+    // pass back to client
+    
   })
   .catch((err) => {
     console.log('error from github: ',err);
@@ -49,13 +55,19 @@ app.post('/repos/import', function (req, res) {
 
 
 app.get('/repos', function (req, res) {
+
+  console.log('response from app.get on the server side', res);
   // TODO
   // upon app startup
   // read from db (top 25 repos)
   // POST response (top 25 repos) to client
+  Repo.find((err, repo) => {
+    if (err) {
+      return console.log('error', err);
+    }
+    console.log('repo that was returned ----------------------', repo);
+  });
 });
-
-
 
 var port = 1128;
 

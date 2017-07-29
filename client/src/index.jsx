@@ -18,17 +18,22 @@ class App extends React.Component {
     console.log(`${term} was searched`);
 
     // POST 'term' to server
-    axios.post('/repos/import', {
-      username: term
-    })
-    .then((response) => {
-      console.log(`${term} has been accepted`);
-      console.log('response: ', response);
-    })
-    .catch((err) => {
-      console.log(`something went wrong in the POST request of ${term}`);
-      console.log('error:', err);
-    });
+    axios.post('/repos/import', { username: term })
+      .then((response) => {
+      })
+      .then(() => {
+        console.log('YYYYYAAAAAAYYYYY');
+      })
+      .catch((err) => {
+      })
+
+    axios.get('/repos')
+      .then((repos) => {
+        console.log('ME: success from axios.get repos:', repos);
+      })
+      .catch((err) => {
+        console.log('ME: error from axios.get repos', err);
+      });
   }
 
   render () {
