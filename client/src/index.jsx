@@ -103,6 +103,10 @@ class App extends React.Component {
     }
     this.search = this.search.bind(this);
   }
+  
+  componentDidMount() {
+    console.log('COMPONENT DID MOUNT');
+  };
 
   search (term) {
     console.log(`${term} was searched`);
@@ -119,10 +123,11 @@ class App extends React.Component {
 
     axios.get('/repos')
       .then((repos) => {
-        console.log('ME: success from axios.get repos:', repos);
+        console.log('#1 GET REQ: success from axios.get repos:');
+
       })
       .catch((err) => {
-        console.log('ME: error from axios.get repos', err);
+        console.log('### ERROR = ME: error from axios.get repos', err);
       });
   }
 

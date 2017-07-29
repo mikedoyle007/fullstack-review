@@ -11,11 +11,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.post('/repos/import', function (req, res) {
-  console.log('post request received by server');
+  console.log('#1 post route: post received by server!');
   let username = req.body.username;
   
   axios.get(`https://api.github.com/users/${username}/repos`)
   .then((response) => {
+    console.log('#2 post route: axios.get entered, success!');
     for (var i = 0; i < response.data.length; i++) {
       let repo = new Repo({
         username: username,
@@ -24,27 +25,19 @@ app.post('/repos/import', function (req, res) {
         description: response.data[i].description,
         forks: response.data[i].forks
       })
-      .save((err, repo) => {
+      .save((err, response) => {
         if (err) {
-          console.log('ME: error storing in server');
+          console.log('###ME: error storing in server', err);
         }
-        console.log('ME: success saving to database!!!');
-        // TODO: start here
-
+        console.log('#3 post route: repo saved to database, success!');
+        console.log('#4 post route: repo =', response);
+        response.end();
+        // TODO: confirm this works properly
       });
-      console.log('repo = :', repo);
     }
   })
-  .then((response1) => {
-    console.log('right before the repo.find');
-    console.log('response1 = ', response1);
-    Repo.find((err, repositories) => {
-      // do magic here
-      console.log('repositories after find() = ', repositories);
-    });
-  })
   .catch((err) => {
-    console.log('error from github: ',err);
+    console.log('###ERROR FROM GITHUB: ',err);
     // re-route back to search page with error message
   });
 });

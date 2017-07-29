@@ -1,7 +1,8 @@
-var mongoose = require('mongoose');
+let mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/fetcher');
+let findOrCreate = require('mongoose-find-or-create');
 
-var repoSchema = mongoose.Schema({
+let repoSchema = mongoose.Schema({
   username: String,
   name: String,
   url: String,
@@ -9,6 +10,7 @@ var repoSchema = mongoose.Schema({
   forks: Number 
 });
 
-var Repo = mongoose.model('Repo', repoSchema);
+repoSchema.plugin(findOrCreate);
+let Repo = mongoose.model('Repo', repoSchema);
 
 module.exports = Repo;
