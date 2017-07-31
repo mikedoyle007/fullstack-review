@@ -24,12 +24,9 @@ app.post('/repos/import', function (req, res) {
         forks: response.data[i].forks
       })
       .save((err, response2) => {
-        console.log('TRACE #1: in .save');
         if (err) {
-          console.log('TRACE #2: inside error block');
           return console.log('###ME: error storing in server');
         }
-        console.log('TRACE #3: just before res.send');
         // res.send(200);
       });
     }
@@ -38,25 +35,16 @@ app.post('/repos/import', function (req, res) {
     res.send(200);
   })
   .catch((err) => {
-    console.log('TRACE #4: inside catch error block');
     return console.log('###ERROR FROM GITHUB: ');
   });
 });
 
-
-
 app.get('/repos', function (req, res) {
-
-  console.log('#2 GET REQ: response from app.get on the server side');
   Repo.find((err, response) => {
     if (err) {
       return console.log('error', err);
     }
-    console.log('#3 GET REQ: response from database is successful');
-    console.log('#4 GET REQ: response is: ', response[0]);
-    // send back response
     res.send(response);
-    console.log('#5 GET REQ: response was successfully send back');
   });
 });
 
