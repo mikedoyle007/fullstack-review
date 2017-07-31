@@ -15,16 +15,9 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    console.log('COMPONENT DID MOUNT');
     axios.get('/repos')
       .then((response) => {
-        console.log('#1 GET REQ: success from axios.get repos:');
-        console.log('#6 GET REQ: response received back from get request');
-        console.log('#7 GET REQ: response that was received is: ', response.data);
-
         this.setState({repos: response.data});
-        console.log('#8 GET REQ: this.state.repos = ', this.state.repos);
-
       })
       .catch((err) => {
         console.log('### ERROR = ME: error from axios.get repos', err);
@@ -33,8 +26,6 @@ class App extends React.Component {
 
   search (term) {
     console.log(`${term} was searched`);
-
-    // POST 'term' to server
     axios.post('/repos/import', { username: term })
       .then((response) => {
       })
