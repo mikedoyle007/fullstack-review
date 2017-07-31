@@ -1,17 +1,17 @@
 import React from 'react';
 
-const Result = (props) => {
+const Repo = (props) => {
   return (
     <div>
       <br/>
-      <li>
+      <div>
         repo: {props.repos.name}
-      </li>
+      </div>
     </div>
   );
 }
 
-export default Result;
+export default Repo;
 
 /*
   <br/>

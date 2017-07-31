@@ -1,5 +1,5 @@
 import React from 'react';
-import Result from './Result.jsx';
+import Repo from './Repo.jsx';
 
 const RepoList = (props) => {
 
@@ -7,12 +7,12 @@ const RepoList = (props) => {
     <div>
       <h4> Repo List Component </h4>
       There are {props.repos.length} repos.
-      <ul>
+      <div>
         {
           props.repos.map( repo => 
-          <Result repos={repo} />
+          <Repo repos={repo} />
         )}
-      </ul>
+      </div>
     </div>
   );
 };
